@@ -1,0 +1,30 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: django_container
+    restart: unless-stopped
+    command: gunicorn django_docker.wsgi:application -w 4 -b 0.0.0.0:8000
+    volumes:
+      - .:/app
+      - static:/app/static
+    ports:
+      - "8000:8000"
+    environment:
+      DEBUG: "True"
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    restart: on-failure
+    volumes:
+      - ./nginx/neuro.conf:/etc/nginx/neuro.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+
+volumes:
+  static:
