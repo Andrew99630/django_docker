@@ -1,6 +1,8 @@
 FROM python:3.10.13-alpine
 # Задать переменные среды
 # Задать рабочий каталог
+SHELL ["/bin/bash", "-c"]
+
 WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE=1
