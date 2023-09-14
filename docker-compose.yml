@@ -5,15 +5,15 @@ services:
       dockerfile: Dockerfile
     container_name: django_container
     restart: unless-stopped
-    command: gunicorn django_docker.wsgi:application -w 4 -b 0.0.0.0:8000
+    command: bash -c "./manage.py collectstatic --noinput && ./manage.py migrate  && gunicorn -b 0.0.0.0:8000 django_docker.wsgi:application"
     volumes:
       - .:/app
       - static:/app/static
       - media:/app/media
-    ports:
-      - "8000:8000"
+#    ports:
+#      - "8000:8000"
     environment:
-      DEBUG: "True"
+      DEBUG: "False"
 
   nginx:
     build:
@@ -22,6 +22,8 @@ services:
     restart: on-failure
     volumes:
       - ./nginx/neuro.conf:/etc/nginx/neuro.conf
+      - static:/app/static
+      - media:/app/media
     ports:
       - "80:80"
     depends_on:
