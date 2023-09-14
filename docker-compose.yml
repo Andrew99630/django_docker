@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile
     restart: on-failure
     volumes:
-      - ./nginx/neuro.conf:/etc/nginx/neuro.conf
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - static:/app/static
       - media:/app/media
     ports:
