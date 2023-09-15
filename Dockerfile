@@ -16,6 +16,6 @@ COPY . .
 
 EXPOSE 8000
 
-RUN python manage.py migrate
+RUN python manage.py migrate && python manage.py collectstatic && mkdir /app/log/gunicorn && touch /app/log/gunicorn/gunicorn_access.log && touch /app/log/gunicorn/gunicorn_error.log && mkdir /app/log/nginx && touch /app/log/nginx/error.log && touch /app/log/nginx/access.log
 
 #CMD ["gunicorn", "--config", "gunicorn_config.py", "app.wsgi:application"]
