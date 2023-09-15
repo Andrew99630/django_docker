@@ -10,10 +10,10 @@ services:
       - .:/app
       - static:/app/static
       - media:/app/media
-#    ports:
-#      - "8000:8000"
+    ports:
+      - "8000:8000"
     environment:
-      DEBUG: "False"
+      DEBUG: "True"
     networks:
       - mynetwork
 
