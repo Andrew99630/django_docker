@@ -8,9 +8,14 @@ ENV PYTHONUNBUFFERED=1
 # Установить зависимости
 RUN pip install --upgrade pip
 
-COPY requirements.txt /app/
+COPY requirements.txt gunicorn_conf.py /app/
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+EXPOSE 8000
+
+RUN python manage.py migrate
+
+#CMD ["gunicorn", "--config", "gunicorn_config.py", "app.wsgi:application"]
